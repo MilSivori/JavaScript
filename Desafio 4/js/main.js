@@ -65,4 +65,83 @@ if (avenida == 'corrientes') {
     prompt('mejor tomate un taxi')
 }*/
 
-console.log('hola mundo, estoy en coder')
+console.log('Desafio de JS numero 4');
+console.log('Chinchirorin o Cee-Lo');
+
+const jugador1 = prompt('Ingresa el Nombre del Jugador1');
+const jugador2 = prompt('Ingresa el Nombre del Jugador2');
+
+let num1 = Math.floor(Math.random() * 6) + 1;
+let num2 = Math.floor(Math.random() * 6) + 1;
+let num3 = Math.floor(Math.random() * 6) + 1;
+let puntaje1 = 0;
+let puntaje2 = 0;
+
+const rollDice = () => {
+    do {
+        num1 = Math.floor(Math.random() * 6) + 1;
+        num2 = Math.floor(Math.random() * 6) + 1;
+        num3 = Math.floor(Math.random() * 6) + 1;
+        console.log(`salio ${num1} ${num2} ${num3}`)
+    } while ((num1 != num2) && (num1 != num3) && (num2 != num3));
+    return num1, num2, num3
+};
+const puntuacion = () => {
+    if (puntaje1 == 0) {
+        if (num1 == num2) {
+            puntaje1 = num3
+            console.log(`El puntaje de ${jugador1} es ${num3}`)
+            return puntaje1
+        } else if (num1 == num3) {
+            puntaje1 = num2
+            console.log(`El puntaje de ${jugador1} es ${num2}`)
+            return puntaje1
+        } else {
+            puntaje1 = num1
+            console.log(`El puntaje de ${jugador1} es ${num1}`)
+            return puntaje1
+        }
+    } else {
+        if (num1 == num2) {
+            puntaje2 = num3
+            console.log(`El puntaje de ${jugador2} es ${num3}`)
+            return puntaje2
+        } else if (num1 == num3) {
+            puntaje2 = num2
+            console.log(`El puntaje de ${jugador2} es ${num2}`)
+            return puntaje2
+        } else {
+            puntaje2 = num1
+            console.log(`El puntaje de ${jugador2} es ${num1}`)
+            return puntaje2
+        }
+    }
+};
+const control = () => {
+    if (puntaje1 == puntaje2) {
+        puntaje1 = 0;
+        puntaje2 = 0;
+        console.log('hay un empate, desempatando');
+        if (puntaje1 == puntaje2) {
+            rollDice();
+            puntuacion();
+            rollDice();
+            puntuacion();
+        }
+        return control();
+    } else {
+        return declararGanador();
+    };
+};
+const declararGanador = () => {
+    if (puntaje1 > puntaje2) {
+        return console.log(`gano ${jugador1}`)
+    } else {
+        return console.log(`gano ${jugador2}`)
+    }
+};
+rollDice();
+puntuacion();
+rollDice();
+puntuacion();
+control();

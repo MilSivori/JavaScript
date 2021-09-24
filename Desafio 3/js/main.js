@@ -65,4 +65,54 @@ if (avenida == 'corrientes') {
     prompt('mejor tomate un taxi')
 }*/
 
-console.log('hola mundo, estoy en coder')
+console.log('Desafio de JS numero 3');
+console.log('Chinchirorin o Cee-Lo');
+
+const jugador1 = prompt('Ingresa el Nombre del Jugador1');
+const jugador2 = prompt('Ingresa el Nombre del Jugador2');
+
+let num1 = Math.floor(Math.random() * 6) + 1;
+let num2 = Math.floor(Math.random() * 6) + 1;
+let num3 = Math.floor(Math.random() * 6) + 1;
+let puntaje1
+let puntaje2
+
+do {
+    num1 = Math.floor(Math.random() * 6) + 1;
+    num2 = Math.floor(Math.random() * 6) + 1;
+    num3 = Math.floor(Math.random() * 6) + 1;
+    console.log(`salio ${num1} ${num2} ${num3}`)
+} while ((num1 != num2) && (num1 != num3) && (num2 != num3));
+if (num1 == num2) {
+    puntaje1 = num3
+    console.log(`El puntaje de ${jugador1} es ${num3}`)
+} else if (num1 == num3) {
+    puntaje1 = num2
+    console.log(`El puntaje de ${jugador1} es ${num2}`)
+} else {
+    puntaje1 = num1
+    console.log(`El puntaje de ${jugador1} es ${num1}`)
+}
+do {
+    num1 = Math.floor(Math.random() * 6) + 1;
+    num2 = Math.floor(Math.random() * 6) + 1;
+    num3 = Math.floor(Math.random() * 6) + 1;
+    console.log(`salio ${num1} ${num2} ${num3}`)
+} while ((num1 != num2) && (num1 != num3) && (num2 != num3))
+if (num1 == num2) {
+    puntaje2 = num3
+    console.log(`El puntaje de ${jugador2} es ${num3}`)
+} else if (num1 == num3) {
+    puntaje2 = num2
+    console.log(`El puntaje de ${jugador2} es ${num2}`)
+} else {
+    puntaje2 = num1
+    console.log(`El puntaje de ${jugador2} es ${num1}`)
+}
+if (puntaje1 > puntaje2) {
+    console.log(`gano ${jugador1}`)
+} else if (puntaje2 > puntaje1) {
+    console.log(`gano ${jugador2}`)
+} else {
+    console.log('hay un empate')
+}
