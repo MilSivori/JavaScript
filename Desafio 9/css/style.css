@@ -1,0 +1,47 @@
+body {
+    background-color: black;
+}
+
+main {
+    margin: 0 1rem;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1,
+h2 {
+    font-weight: bold;
+    font-size: 3rem;
+    color: whitesmoke;
+}
+
+p {
+    font-size: 2rem;
+    color: whitesmoke;
+}
+
+.logo {
+    width: 200px;
+}
+
+img {
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+}
+
+.dados {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
