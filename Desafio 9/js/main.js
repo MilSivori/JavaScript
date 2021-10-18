@@ -3,7 +3,7 @@ console.log('%cCee-Lo', "color: green; font-weight: bold; font-size: 1.1rem");
 
 //objetos con info del jugador
 class Jugador {
-    constructor(nombre, edad, puntaje, victorias) {
+    constructor(nombre, puntaje, victorias) {
         this.nombre = nombre;
         this.puntos = puntaje;
         this.victorias = victorias;
