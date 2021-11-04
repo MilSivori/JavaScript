@@ -20,15 +20,15 @@
         </div>
         <h2>Reglas</h2>
         <p>Se lanzan los dados hasta obtener dos iguales, el que es distinto pasa a ser TU PUNTUACION. El oponente hace lo mismo. Se comparan las puntuaciones, el que tiene el numero mas grande, gana.</p>
-        <div><button>JUGAR</button></div>
+
     </main>
     <div class="grid">
         <div class="dados">
-            <form action="submit"><input type="text" placeholder="Nombre Jugador 1" id="nombre1"><button>Enviar</button></input>
+            <form action="submit"><input type="text" placeholder="Nombre Jugador 1"><button id="nombre1">Enviar</button></input>
             </form>
         </div>
         <div class="dados">
-            <form action="submit"><input type="text" placeholder="Nombre Jugador 2" id="nombre2"><button>Enviar</button></input>
+            <form action="submit"><input type="text" placeholder="Nombre Jugador 2"><button id="nombre2">Enviar</button></input>
             </form>
         </div>
         <div class="dados">
@@ -43,9 +43,13 @@
         <div class="dados">
             <div><img src="img/dice_small_2.png" alt=""></div>
         </div>
-
-
-        <script src="./js/main.js"></script>
+    </div>
+    <div class="dados">
+        <p>Ingresa Los Nombres de los participantes y presiona el boton</p>
+    </div>
+    <div class="flex"><button id="btn">JUGAR</button></div>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 
 </html>

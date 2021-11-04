@@ -4,28 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viandas Locas</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>backofice</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
     <nav>
         <ul>
-            <li><a href="./index.html">INICIO</a></li>
-            <li><a href="./pages/carrito.html">CARRITO</a></li>
-
+            <li><a href="../index.html">INICIO</a></li>
+            <li><a href="./carrito.html">CARRITO</a></li>
+            <li><a href="./backofice.html">BACKOFICE</a></li>
         </ul>
-        <form action=""><input type="text" id="name"><input type="password" id="pass"></form><button id="btn">Ingresar</button>
-        <div id="contenedor"></div>
     </nav>
+
     <main>
         <h1>Viandas Locas</h1>
         <p>Somos Viandas Locas, te traemos a la mesa viandas ricas y saludables</p>
-        <h2>Elegi tu Vianda</h2>
+        <h2>Bienvenido Admin</h2>
         <div class="grid">
             <div class="flex cards">
                 <div>
-                    <img src="./img/cesar.jpg" alt="foto cesar" class="muestra">
+                    <img src="../img/cesar.jpg" alt="foto cesar" class="muestra">
                 </div>
                 <div>
                     <h3>Ensalada Cesar</h3>
@@ -33,29 +32,29 @@
                 <div>
                     <p>Descripcion Ensalada, ingredientes, etc...</p>
                     <ul class="lista">
-                        <li>Precio</li>
-                        <li>Stock</li>
+                        <li><input type="number" placeholder="Precio"></li>
+                        <li><input type="number" placeholder="Stock"></li>
                     </ul>
                 </div>
-                <button>Agregar Al Carrito</button>
+                <button>Agregar Producto</button>
             </div>
             <div class="flex cards">
-                <div><img src="./img/chef.jpg" alt="foto chef" class="muestra"></div>
+                <div><img src="../img/chef.jpg" alt="foto chef" class="muestra"></div>
                 <div>
                     <h3>Ensalada Chef</h3>
                 </div>
                 <div>
                     <p>Descripcion Ensalada, ingredientes, etc...</p>
                     <ul class="lista">
-                        <li>Precio</li>
-                        <li>Stock</li>
+                        <li><input type="number" placeholder="Precio"></li>
+                        <li><input type="number" placeholder="Stock"></li>
                     </ul>
                 </div>
-                <button>Agregar Al Carrito</button>
+                <button>Agregar Producto</button>
             </div>
             <div class="flex cards">
                 <div>
-                    <img src="./img/rusa.jpg" alt="foto rusa" class="muestra">
+                    <img src="../img/rusa.jpg" alt="foto rusa" class="muestra">
                 </div>
                 <div>
                     <h3>Ensalada Rusa</h3>
@@ -63,17 +62,19 @@
                 <div>
                     <p>Descripcion Ensalada, ingredientes, etc...</p>
                     <ul class="lista">
-                        <li>Precio</li>
-                        <li>Stock</li>
+                        <li><input type="number" placeholder="Precio"></li>
+                        <li><input type="number" placeholder="Stock"></li>
                     </ul>
                 </div>
-                <button>Agregar Al Carrito</button>
+                <button>Agregar Producto</button>
             </div>
         </div>
     </main>
 
-    <script src="./js/user.js"></script>
-    <script src="./js/main.js"></script>
-</body>
 
-</html>
+
+
+
+    <!-- <script src="../js/user.js"></script> -->
+    <script src="../js/productos.js"></script>
+</body>

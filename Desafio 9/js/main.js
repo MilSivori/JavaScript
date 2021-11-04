@@ -11,23 +11,36 @@ class Jugador {
 }
 
 const jugadores = [];
+//Botones para agregar info del jugador 1 y 2
 
 function agregarJugador(i) {
     const competidor = new Jugador(document.getElementsByTagName("input")[i].value, 0, 0)
     jugadores.push(competidor);
 }
 
-document.getElementsByTagName("button")[1].addEventListener("click", (e) => {
+$('#nombre1').on('click', (e) => {
     e.preventDefault();
     agregarJugador(0);
     document.getElementsByTagName('h3')[0].textContent = "Resultado " + jugadores[0].nombre;
 })
-document.getElementsByTagName("button")[2].addEventListener("click", (e) => {
+$('#nombre2').on('click', (e) => {
     e.preventDefault();
     agregarJugador(1);
     document.getElementsByTagName('h3')[1].textContent = "Resultado " + jugadores[1].nombre;
 })
 
+/*
+document.getElementsByTagName("button")[0].addEventListener("click", (e) => {
+    e.preventDefault();
+    agregarJugador(0);
+    document.getElementsByTagName('h3')[0].textContent = "Resultado " + jugadores[0].nombre;
+})
+document.getElementsByTagName("button")[1].addEventListener("click", (e) => {
+    e.preventDefault();
+    agregarJugador(1);
+    document.getElementsByTagName('h3')[1].textContent = "Resultado " + jugadores[1].nombre;
+})
+*/
 
 // Generador de bienvenidas random. Modifica el primer 'p'
 let bienvenidaRandom = () => {
@@ -47,8 +60,8 @@ let bienvenidaRandom = () => {
     return welcome
 }
 
-
-document.getElementsByTagName('p')[0].textContent = bienvenidaRandom()
+$('p:first').text(bienvenidaRandom)
+$('p:first').append(`<p> Este texto lo agrego con jquery</p>`);
 
 // funcion para lanzar dados
 let lanzarDado = () => Math.floor(Math.random() * 6) + 1;
@@ -83,9 +96,11 @@ const desempatar = () => jugadores[0].puntaje === jugadores[1].puntaje;
 const ganador = () => {
     if (jugadores[0].puntaje > jugadores[1].puntaje) {
         jugadores[0].victorias++;
+        document.getElementsByTagName("p")[2].textContent = `Ganó ${jugadores[0].nombre}!`
         console.log(`%cGanó ${jugadores[0].nombre}!`, "color: darkgreen; font-weight: bold")
     } else {
         jugadores[1].victorias++;
+        document.getElementsByTagName("p")[2].textContent = `Ganó ${jugadores[1].nombre}!`
         console.log(`%cGanó ${jugadores[1].nombre}!`, "color: darkgreen; font-weight: bold")
     }
 }
@@ -113,22 +128,25 @@ const victorioso = () => {
 
 // Y este seria el juego completo
 let jugar = () => {
-    for (i = 0; i < jugadores.length; i++) {
-        jugadores[i].puntaje = turno();
-        mostrarEnPantalla(i);
-        console.log(`El puntaje de ${jugadores[i].nombre} es ${jugadores[i].puntaje}`);
-    }
-    while (desempatar()) {
-        console.log("%cHUBO UN EMPATE! A DESEMPATAR:", "color: red; font-size:1.2rem")
+    if (jugadores[0] != undefined && jugadores[1] != undefined) {
         for (i = 0; i < jugadores.length; i++) {
             jugadores[i].puntaje = turno();
             mostrarEnPantalla(i);
             console.log(`El puntaje de ${jugadores[i].nombre} es ${jugadores[i].puntaje}`);
         }
-    };
-    ganador();
-    seguirJugando();
-
+        while (desempatar()) {
+            console.log("%cHUBO UN EMPATE! A DESEMPATAR:", "color: red; font-size:1.2rem")
+            for (i = 0; i < jugadores.length; i++) {
+                jugadores[i].puntaje = turno();
+                mostrarEnPantalla(i);
+                console.log(`El puntaje de ${jugadores[i].nombre} es ${jugadores[i].puntaje}`);
+            }
+        };
+        ganador();
+        //seguirJugando();
+    } else {
+        document.getElementsByTagName("p")[2].textContent = "Debes ingresar los nombres primero"
+    }
 }
 
 
@@ -155,4 +173,8 @@ let mostrarEnPantalla = (i) => {
             break;
     }
 }
-document.getElementsByTagName('button')[0].addEventListener("click", jugar);
+
+//boton jugar
+//document.getElementsByTagName('button')[2].addEventListener("click", jugar);
+//boton jugar con jquery
+$('#btn').on('click', jugar)

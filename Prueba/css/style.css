@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Playfair+Display&display=swap');
+
+/*FUENTES
+    font-family: 'Open Sans', sans-serif;
+	font-family: 'Playfair Display', serif;
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: BLACK
+}
+
+p {
+    color: white;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+
+/* ATRIBUTOS FLEX Y GRID */
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.grid {
+    margin: 5%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-row-gap: 1.5rem;
+    grid-column-gap: 1.5rem;
+    align-items: stretch;
+}
+
+
+/* ------------------------------ NAV-----------------------------------*/
+
+nav {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+nav ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 5px 0 5px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size .3s;
+}
+
+nav a:hover,
+nav a:focus {
+    background-size: 100% 2px;
+    color: rgba(72, 61, 140, 1);
+}
+
+
+/* ------------------------------MAIN------------------------------- */
+
+h1,
+h2,
+h3 {
+    text-decoration: none;
+    font-size: 2rem;
+    font-family: 'Playfair Display SC', serif;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.cards {
+    margin: 3%;
+    background-color: rgba(165, 69, 104, 0.2);
+    padding: 10%;
+    border-style: double;
+    border-color: rgba(165, 69, 104, 1);
+}
+
+.lista {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0px;
+}
+
+.lista li {
+    color: white;
+    display: inline-block;
+}
+
+
+/*TAMAÑO ICONOS LINKS*/
+
+.muestra {
+    object-fit: contain;
+    width: 70vw;
+    max-height: 100%;
+    border-style: double;
+}
+
+
+/*--------------------- MEDIA QUERY START --------------------------*/
+
+@media only screen and (min-width: 768px) {
+    h1,
+    h2,
+    h3 {
+        font-size: 3.5rem;
+    }
+    nav ul {
+        justify-content: flex-end;
+    }
+    nav ul li {
+        margin: 0px .6rem 0px .6rem;
+    }
+    nav ul li a {
+        font-size: 1.4rem;
+    }
+    .grid {
+        grid-template-columns: repeat(2, 2fr);
+    }
+    .muestra {
+        width: 33vw;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(3, 3fr);
+    }
+    .muestra {
+        width: 22vw;
+    }
+}
