@@ -10,16 +10,25 @@
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 body {
-    background-color: BLACK
+    background-color: rgb(21, 88, 67);
+}
+
+
+/* modificacion modo oscuro */
+
+body.dark {
+    background-color: black
 }
 
 p {
     color: white;
     text-align: center;
     font-size: 1.3rem;
+    margin: 0 20vw;
 }
 
 
@@ -29,7 +38,16 @@ p {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
 }
 
 .grid {
@@ -50,43 +68,27 @@ p {
 }
 
 .btn {
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-}
-
-
-/* ------------------------------ NAV-----------------------------------*/
-
-nav {
+    margin: 20px;
     padding: 10px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    background-color: darkgrey;
+    height: 50px;
+    border: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 3px;
+    transition: background 1s;
+    color: black;
+    font-size: 1rem;
 }
 
-nav ul li {
-    list-style: none;
-    display: inline-block;
-    margin: 0 5px 0 5px;
+.btn:hover {
+    cursor: pointer;
+    color: black;
+    background-color: gainsboro;
 }
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    background: linear-gradient(currentColor, currentColor);
-    background-position: 0% 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    transition: background-size .3s;
-}
-
-nav a:hover,
-nav a:focus {
-    background-size: 100% 2px;
-    color: rgba(72, 61, 140, 1);
+#button {
+    font-size: 1.5rem;
 }
 
 
@@ -103,35 +105,6 @@ h3 {
     text-align: center;
 }
 
-.cards {
-    margin: 3%;
-    background-color: rgba(165, 69, 104, 0.2);
-    padding: 10%;
-    border-style: double;
-    border-color: rgba(165, 69, 104, 1);
-}
-
-.lista {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0px;
-}
-
-.lista li {
-    color: white;
-    display: inline-block;
-}
-
-
-/*TAMAÑO ICONOS LINKS*/
-
-.muestra {
-    object-fit: contain;
-    width: 70vw;
-    max-height: 100%;
-    border-style: double;
-}
-
 
 /*--------------------- MEDIA QUERY START --------------------------*/
 
@@ -141,28 +114,13 @@ h3 {
     h3 {
         font-size: 3.5rem;
     }
-    nav ul {
-        justify-content: flex-end;
-    }
-    nav ul li {
-        margin: 0px .6rem 0px .6rem;
-    }
-    nav ul li a {
-        font-size: 1.4rem;
-    }
     .grid {
         grid-template-columns: repeat(2, 2fr);
-    }
-    .muestra {
-        width: 33vw;
     }
 }
 
 @media only screen and (min-width: 1200px) {
     .grid {
         grid-template-columns: repeat(2, 3fr);
-    }
-    .muestra {
-        width: 22vw;
     }
 }

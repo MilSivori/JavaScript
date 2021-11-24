@@ -1,3 +1,9 @@
+console.log('%cDesafio de JS FINAL', "color:darkred; font-weight: bold; font-size: 1.3rem");
+console.log('%cCee-Lo', "color: green; font-weight: bold; font-size: 1.1rem");
+
+
+//defino mi clase jugador, con sus 3 valores, nombre, puntuacion que toma el valor del dado valido y victorias que suma la cantidad de rondas ganadas.
+
 class Jugador {
     constructor(nombre, puntuacion, victorias) {
         this.nombre = nombre;
@@ -5,12 +11,35 @@ class Jugador {
         this.victorias = victorias;
     };
 };
+//en el array jugadores se almacena cada Jugador
+const jugadores = [];
 
+//click al boton para agregar al array los jugadores
+document.getElementById("btn").addEventListener("click", (e) => {
+    e.preventDefault();
+    agregarGente();
+})
 
-let player1 = new Jugador("JUGADOR1", 0, 0);
-let player2 = new Jugador("JUGADOR2", 0, 0);
-const jugadores = [player1, player2];
+//esta funcion es llamada por el boton, agrega jugadores al array
+function agregarGente() {
+    let nombre = document.querySelector("#nombre").value
+    let tipo = new Jugador(nombre, 0, 0);
+    jugadores.push(tipo)
+    document.getElementsByTagName("form")[0].reset()
+    borrarBoton();
+}
 
+//esta funcion esta dentro de la que mete gente al array, sirve para que se tome un maximo de 2 jugadores y muestra el resto cuando fueron cargados los datos
+function borrarBoton() {
+    if (jugadores.length == 1) {
+        document.querySelector("#nombre").setAttribute("placeholder", "Nombre Jugador 2")
+    } else if (jugadores.length == 2) {
+        document.querySelector("form").style.display = "none"
+        $('.grid').fadeIn(2000)
+    }
+}
+
+//cada boton llama a la funcion que ejecuta el juego, una para cada jugador
 $('#lanzar1').on("click", () => {
     mostrarDados(0)
 })
@@ -18,20 +47,26 @@ $('#lanzar2').on("click", () => {
     mostrarDados(3)
 })
 
-
+//esta funcion arroja los dados hasta conseguir un resultado valido. Antes solamente lanzaba los dados, pero decidi automatizarla para darle velocidad
 function lanzarDados() {
-    let dado1 = Math.floor(Math.random() * (1, 6)) + 1;
-    let dado2 = Math.floor(Math.random() * (1, 6)) + 1;
-    let dado3 = Math.floor(Math.random() * (1, 6)) + 1;
+    let dado1
+    let dado2
+    let dado3
+    do {
+        dado1 = Math.floor(Math.random() * (1, 6)) + 1;
+        dado2 = Math.floor(Math.random() * (1, 6)) + 1;
+        dado3 = Math.floor(Math.random() * (1, 6)) + 1;
+    } while (dado1 != dado2 && dado1 != dado3 && dado2 != dado3)
     let array = [dado1, dado2, dado3]
     return array
 }
 
+//con esto defino si el resultado de la tirada es valido o deberia seguir tirando
 function compararDados(i) {
     if (i == 0) {
         if (resultados[0] == resultados[1] || resultados[0] == resultados[2] || resultados[1] == resultados[2]) {
             $("#lanzar1").text("resultado obtenido!")
-                .fadeOut(2000)
+                .fadeOut(500)
             dadoGanador(0)
             boton()
         } else {
@@ -40,7 +75,7 @@ function compararDados(i) {
     } else {
         if (resultados[0] == resultados[1] || resultados[0] == resultados[2] || resultados[1] == resultados[2]) {
             $("#lanzar2").text("resultado obtenido!")
-                .fadeOut(2000)
+                .fadeOut(500)
             dadoGanador(1)
             boton()
         } else {
@@ -49,6 +84,7 @@ function compararDados(i) {
     }
 }
 
+//el dado valido se le asigna a cada jugador
 function dadoGanador(jug) {
     if (resultados[0] == resultados[1]) {
         jugadores[jug].puntuacion = resultados[2]
@@ -59,7 +95,7 @@ function dadoGanador(jug) {
     }
 }
 
-
+//mi mayor logro en js XD, muestra los dados en pantalla, me quede calvo 3 veces resolviendo como hacerla
 function mostrarDados(entrante) {
     resultados = lanzarDados()
     let i = entrante
@@ -94,22 +130,60 @@ function mostrarDados(entrante) {
     });
 }
 
+//revelar quien gana cada partida
 function boton() {
+
     if (jugadores[0].puntuacion != 0 && jugadores[1].puntuacion != 0) {
-        $("body").append(`<div class="btn"><button id="ganador">Quien Gano?<div>`);
-        $("#ganador").on("click", () => {
-            $("#ganador").fadeOut(500)
-            $(".btn").append(`<p>EL GANADOR ES ${compararPuntajes()}</p>`)
-        })
+        console.log("entra en diferentes puntuaciones")
+        if (jugadores[0].victorias != 0 || jugadores[1].victorias != 0) {
+            let boton = document.getElementsByTagName("p")[1]
+            $('.btn').fadeIn(500)
+            $('#ganador').fadeIn(500)
+            $("#ganador").on("click", () => {
+                $("#ganador").fadeOut(100)
+                boton.textContent = `!!!EL GANADOR ES: ${compararPuntajes()}!!! la concha de tu hermana`;
+                jugarDeNuevo()
+            })
+            console.log("entra en diferentes victorias")
+        } else {
+            $(".btn").append(`<button id="ganador">Quien Gano?`);
+            $("#ganador").on("click", () => {
+                $("#ganador").fadeOut(100)
+                $(".btn").append(`<p>!!!EL GANADOR ES: ${compararPuntajes()}!!!</p>`)
+                jugarDeNuevo()
+            })
+            console.log("entra en diferentes la que deberia entrar solo una vez")
+        }
     }
 }
 
+//comparar los puntajes, llamada en la funcion anterior
 function compararPuntajes() {
     if (jugadores[0].puntuacion > jugadores[1].puntuacion) {
-        return jugadores[0].nombre;
+        jugadores[0].victorias++;
+        jugadores.forEach(element => {
+            element.puntuacion = 0
+        })
+        return jugadores[0].nombre.toUpperCase();
     } else if (jugadores[1].puntuacion > jugadores[0].puntuacion) {
-        return jugadores[1].nombre;
+        jugadores[1].victorias++;
+        jugadores.forEach(element => {
+            element.puntuacion = 0
+        })
+        return jugadores[1].nombre.toUpperCase();
     } else {
-        return "NADIE"
+        jugadores.forEach(element => {
+            element.puntuacion = 0;
+            element.victorias += 1
+        })
+        return "NADIE, HUBO UN EMPATE"
     }
+}
+
+function jugarDeNuevo() {
+    $("#lanzar1").text("Jugar de Nuevo")
+        .fadeIn(500)
+    $("#lanzar2").text("Jugar de Nuevo")
+        .fadeIn(500)
+        //$(".btn").fadeOut(500)
 }
