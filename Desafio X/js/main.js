@@ -1,9 +1,11 @@
 console.log('%cDesafio de JS FINAL', "color:darkred; font-weight: bold; font-size: 1.3rem");
 console.log('%cCee-Lo', "color: green; font-weight: bold; font-size: 1.1rem");
 
+//////////////////////
+///CLASE Y VARIABLE///
+//////////////////////
 
 //defino mi clase jugador, con sus 3 valores, nombre, puntuacion que toma el valor del dado valido y victorias que suma la cantidad de rondas ganadas.
-
 class Jugador {
     constructor(nombre, puntuacion, victorias) {
         this.nombre = nombre;
@@ -11,14 +13,15 @@ class Jugador {
         this.victorias = victorias;
     };
 };
+
 //en el array jugadores se almacena cada Jugador
 const jugadores = [];
 
-//click al boton para agregar al array los jugadores
-document.getElementById("btn").addEventListener("click", (e) => {
-    e.preventDefault();
-    agregarGente();
-})
+
+/////////////////////
+///...FUNCIONES...///
+/////////////////////
+
 
 //esta funcion es llamada por el boton, agrega jugadores al array
 function agregarGente() {
@@ -39,15 +42,8 @@ function borrarBoton() {
     }
 }
 
-//cada boton llama a la funcion que ejecuta el juego, una para cada jugador
-$('#lanzar1').on("click", () => {
-    mostrarDados(0)
-})
-$('#lanzar2').on("click", () => {
-    mostrarDados(3)
-})
 
-//esta funcion arroja los dados hasta conseguir un resultado valido. Antes solamente lanzaba los dados, pero decidi automatizarla para darle velocidad
+//Se arrojan los dados hasta conseguir un resultado valido. 
 function lanzarDados() {
     let dado1
     let dado2
@@ -61,45 +57,72 @@ function lanzarDados() {
     return array
 }
 
-//con esto defino si el resultado de la tirada es valido o deberia seguir tirando
-function compararDados(i) {
-    if (i == 0) {
-        if (resultados[0] == resultados[1] || resultados[0] == resultados[2] || resultados[1] == resultados[2]) {
-            $("#lanzar1").text("resultado obtenido!")
-                .fadeOut(500)
-            dadoGanador(0)
-            boton()
-        } else {
-            $("#lanzar1").text("seguir jugando")
-        }
+//defino el dado que no es igual, es el que otorga el puntaje del jugador
+function definirPuntaje(dice) {
+    if (dice[0] == dice[1]) {
+        return dice[2]
+    } else if (dice[0] == dice[2]) {
+        return dice[1]
     } else {
-        if (resultados[0] == resultados[1] || resultados[0] == resultados[2] || resultados[1] == resultados[2]) {
-            $("#lanzar2").text("resultado obtenido!")
-                .fadeOut(500)
-            dadoGanador(1)
-            boton()
-        } else {
-            $("#lanzar2").text("seguir jugando")
-        }
+        return dice[0]
     }
 }
 
-//el dado valido se le asigna a cada jugador
-function dadoGanador(jug) {
-    if (resultados[0] == resultados[1]) {
-        jugadores[jug].puntuacion = resultados[2]
-    } else if (resultados[0] == resultados[2]) {
-        jugadores[jug].puntuacion = resultados[1]
+//esta funcion suma las victorias de cada jugador, tambien desempata automaticamente en caso de que haya un empate.
+function coronado() {
+    let titulo = document.getElementsByTagName("h2")[0]
+    if (jugadores[0].puntuacion > jugadores[1].puntuacion) {
+        jugadores[0].victorias++;
+        titulo.textContent = `gano ${jugadores[0].nombre}`.toUpperCase()
+    } else if (jugadores[1].puntuacion > jugadores[0].puntuacion) {
+        jugadores[1].victorias++;
+        titulo.textContent = `gano ${jugadores[1].nombre}`.toUpperCase()
     } else {
-        jugadores[jug].puntuacion = resultados[0]
+        console.log("EMPATE")
+        mostrarDados()
     }
 }
 
-//mi mayor logro en js XD, muestra los dados en pantalla, me quede calvo 3 veces resolviendo como hacerla
-function mostrarDados(entrante) {
-    resultados = lanzarDados()
-    let i = entrante
-    compararDados(i)
+//esta funcion devuelve el nombre del jugador con mas victorias, que sera asignado al sessionstorage
+function victoria() {
+    if (jugadores[0].victorias > jugadores[1].victorias) {
+        return jugadores[0].nombre
+    } else if (jugadores[1].victorias > jugadores[0].victorias) {
+        return jugadores[1].nombre
+    } else {
+        return "empate"
+    }
+}
+
+///////////////////
+///...EVENTOS...///
+///////////////////
+
+//Agregar al array los jugadores
+document.getElementById("btn").addEventListener("click", (e) => {
+    e.preventDefault();
+    agregarGente();
+})
+
+//Ejecutar evento, lanzar los dados
+$('#lanzar1').on("click", () => {
+    $('#lanzar1').text("Jugar de Nuevo")
+    $('#lanzar2').fadeIn(500)
+    mostrarDados()
+})
+
+///////////////////
+///...LOGICA...////
+///////////////////
+
+//Se ejecutan todas las funciones. Se muestra el ganador, se imprimen los dados en pantalla y se otorga la opcion de seguir jugando o finalizar
+function mostrarDados() {
+    let resultado1 = lanzarDados()
+    let resultado2 = lanzarDados()
+    let resultados = resultado1.concat(resultado2)
+    jugadores[0].puntuacion = definirPuntaje(resultado1)
+    jugadores[1].puntuacion = definirPuntaje(resultado2)
+    let i = 0
     resultados.forEach(element => {
         switch (element) {
             case 1:
@@ -128,62 +151,40 @@ function mostrarDados(entrante) {
                 break
         }
     });
+    coronado()
+    let winner = victoria()
+    sessionStorage.setItem("victoria", JSON.stringify(winner));
 }
 
-//revelar quien gana cada partida
-function boton() {
 
-    if (jugadores[0].puntuacion != 0 && jugadores[1].puntuacion != 0) {
-        console.log("entra en diferentes puntuaciones")
-        if (jugadores[0].victorias != 0 || jugadores[1].victorias != 0) {
-            let boton = document.getElementsByTagName("p")[1]
-            $('.btn').fadeIn(500)
-            $('#ganador').fadeIn(500)
-            $("#ganador").on("click", () => {
-                $("#ganador").fadeOut(100)
-                boton.textContent = `!!!EL GANADOR ES: ${compararPuntajes()}!!! la concha de tu hermana`;
-                jugarDeNuevo()
-            })
-            console.log("entra en diferentes victorias")
-        } else {
-            $(".btn").append(`<button id="ganador">Quien Gano?`);
-            $("#ganador").on("click", () => {
-                $("#ganador").fadeOut(100)
-                $(".btn").append(`<p>!!!EL GANADOR ES: ${compararPuntajes()}!!!</p>`)
-                jugarDeNuevo()
-            })
-            console.log("entra en diferentes la que deberia entrar solo una vez")
-        }
-    }
-}
 
-//comparar los puntajes, llamada en la funcion anterior
-function compararPuntajes() {
-    if (jugadores[0].puntuacion > jugadores[1].puntuacion) {
-        jugadores[0].victorias++;
-        jugadores.forEach(element => {
-            element.puntuacion = 0
-        })
-        return jugadores[0].nombre.toUpperCase();
-    } else if (jugadores[1].puntuacion > jugadores[0].puntuacion) {
-        jugadores[1].victorias++;
-        jugadores.forEach(element => {
-            element.puntuacion = 0
-        })
-        return jugadores[1].nombre.toUpperCase();
+
+
+//ESTA LA DEJO SEPARADA PORQUE LA HICE CON AYUDA, es una alternativa al dark mode, guarda la preferencia en localstorage
+
+//Función que agregar o quita la clase del body
+const cambiarTheme = (e) => {
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("modoDark", "off");
+        document.body.classList.remove("dark");
+        document.getElementsByTagName("i")[0].setAttribute("class", "far fa-moon")
     } else {
-        jugadores.forEach(element => {
-            element.puntuacion = 0;
-            element.victorias += 1
-        })
-        return "NADIE, HUBO UN EMPATE"
+        localStorage.setItem("modoDark", "on");
+        document.body.classList.add("dark");
+        document.getElementsByTagName("i")[0].setAttribute("class", "far fa-sun")
     }
-}
+};
 
-function jugarDeNuevo() {
-    $("#lanzar1").text("Jugar de Nuevo")
-        .fadeIn(500)
-    $("#lanzar2").text("Jugar de Nuevo")
-        .fadeIn(500)
-        //$(".btn").fadeOut(500)
-}
+//Función que se ejecuta al inicio.
+const traerModo = () => {
+    const modoDark = localStorage.getItem("modoDark");
+    if (modoDark === "on") {
+        document.body.classList.add("dark");
+        document.getElementsByTagName("i")[0].setAttribute("class", "far fa-moon")
+    }
+};
+
+traerModo();
+
+//Evento para escuchar cuando el usuario presione el botón
+document.getElementById("button").addEventListener("click", cambiarTheme);
